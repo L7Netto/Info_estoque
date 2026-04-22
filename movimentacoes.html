@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movimentações</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<header class="topo">
+  <a href="home.html" class="btn-voltar">Voltar</a>
+</header>
+
+<body>
+
+    <form id="movForm">
+  <select id="produto_id">
+    <option value="">Selecione um produto</option>
+</select>
+  
+  <select id="tipo">
+    <option value="entrada">Entrada</option>
+    <option value="saida">Saída</option>
+  </select>
+
+  <input id="quantidade" type="number">
+  <button>Movimentar</button>
+</form>
+
+<h3>Histórico de Movimentações</h3>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Produto</th>
+      <th>Tipo</th>
+      <th>Qtd</th>
+      <th>Data</th>
+    </tr>
+  </thead>
+  <tbody id="tabelaHistórico"></tbody>
+</table>
+
+<script type="module" src="js/movimentacoes.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+</head>
+<body>
+
+    <h2 id="user"></h2>
+
+<header class="header">
+  <h1>Início</h1>
+<button onclick="logout()">Sair</button>
+</header>
+
+<div class="menu-topo">
+    <a href="produtos.html" class="btn-caixa">📦 Produtos</a>
+    <a href="cadastro_produto.html" class="btn-caixa">➕ Cadastrar Produto</a>
+    <a href="movimentacoes.html" class="btn-caixa">🔃 Movimentações</a>
+</div>
+
+<script>
+const user = JSON.parse(localStorage.getItem('usuario'))
+
+if (!user) {
+  window.location.href = 'index.html'
+}
+
+document.getElementById('user').innerText = "Bem-vindo, " + user.usuario
+
+function logout(){
+  localStorage.removeItem('usuario')
+  window.location.href = 'index.html'
+}
+</script>
+
+</body>
+</html>
