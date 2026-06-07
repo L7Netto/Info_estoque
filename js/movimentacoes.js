@@ -1,103 +1,166 @@
 import { supabase } from './supabase.js'
 
+const form = document.getElementById('formMovimentacao')
+
+const tabela = document.getElementById(
+  'tabelaMovimentacoes'
+)
+
+const selectProduto = document.getElementById('produto')
+
+const mensagem = document.getElementById('mensagem')
+
 async function carregarProdutos() {
-    const { data } = await supabase.from('produtos').select('*')
-    const select = document.getElementById('produto_id')
-    
-    select.innerHTML = '<option value="">Selecione um produto</option>' 
-    data.forEach(p => {
-        select.innerHTML += `<option value="${p.id}">${p.nome} (Saldo: ${p.quantidade})</option>`
+
+  const { data } = await supabase
+    .from('produtos')
+    .select('*')
+
+  data.forEach(produto => {
+
+    selectProduto.innerHTML += `
+      <option value="${produto.id}">
+        ${produto.nome}
+      </option>
+    `
+  })
+}
+
+async function carregarMovimentacoes() {
+
+  const { data } = await supabase
+    .from('movimentacoes')
+    .select(`
+      *,
+      produtos(nome)
+    `)
+    .order('id', { ascending: false })
+
+  tabela.innerHTML = ''
+
+  data.forEach(mov => {
+
+    tabela.innerHTML += `
+      <tr>
+
+        <td>${mov.produtos.nome}</td>
+
+        <td>
+          <span class="${
+            mov.tipo === 'entrada'
+              ? 'status-ok'
+              : 'status-low'
+          }">
+
+            ${
+              mov.tipo === 'entrada'
+                ? 'Entrada'
+                : 'Saída'
+            }
+
+          </span>
+        </td>
+
+        <td>${mov.quantidade}</td>
+
+        <td>
+          ${new Date(mov.data)
+            .toLocaleDateString('pt-BR')}
+        </td>
+
+      </tr>
+    `
+  })
+}
+
+form.addEventListener('submit', async (e) => {
+
+  e.preventDefault()
+
+  const produto_id = selectProduto.value
+
+  const tipo = document.getElementById('tipo').value
+
+  const quantidade =
+    parseInt(document.getElementById('quantidade').value)
+
+  if (!produto_id || !tipo || !quantidade) {
+
+    mostrarMensagem(
+      'Preencha todos os campos',
+      'erro'
+    )
+
+    return
+  }
+
+  const { data: produto } = await supabase
+    .from('produtos')
+    .select('*')
+    .eq('id', produto_id)
+    .single()
+
+  let novaQuantidade = produto.quantidade
+
+  if (tipo === 'entrada') {
+    novaQuantidade += quantidade
+  } else {
+
+    if (produto.quantidade < quantidade) {
+
+      mostrarMensagem(
+        'Quantidade insuficiente em estoque',
+        'erro'
+      )
+
+      return
+    }
+
+    novaQuantidade -= quantidade
+  }
+
+  await supabase
+    .from('produtos')
+    .update({
+      quantidade: novaQuantidade
     })
-}
+    .eq('id', produto_id)
 
-async function carregarHistorico() {
-    const tabela = document.getElementById('tabelaHistórico');
-    if (!tabela) return; 
-
-    const { data: movs, error } = await supabase
-        .from('movimentacoes')
-        .select(`
-            id,
-            tipo,
-            quantidade,
-            data,
-            produtos ( nome )
-        `)
-        .order('data', { ascending: false });
-
-    if (error) {
-        console.error("Erro ao carregar histórico:", error);
-        return;
-    }
-
-    tabela.innerHTML = "";
-    movs.forEach(m => {
-        const corTipo = m.tipo === 'entrada' ? 'style="color: green; font-weight: bold;"' : 'style="color: red; font-weight: bold;"';
-        const dataFormatada = new Date(m.data).toLocaleString('pt-BR');
-
-        tabela.innerHTML += `
-            <tr>
-                <td>${m.produtos ? m.produtos.nome : 'Produto excluído'}</td>
-                <td ${corTipo}>${m.tipo.toUpperCase()}</td>
-                <td>${m.quantidade}</td>
-                <td>${dataFormatada}</td>
-            </tr>
-        `;
-    });
-}
-
-document.getElementById('movForm').addEventListener('submit', async (e) => {
-    e.preventDefault()
-
-    const produto_id = document.getElementById('produto_id').value
-    const tipo = document.getElementById('tipo').value
-    const quantidade = parseInt(document.getElementById('quantidade').value)
-
-    if (!produto_id || quantidade <= 0) {
-        alert("Selecione um produto e uma quantidade válida")
-        return
-    }
-
-    const { data: produto } = await supabase
-        .from('produtos')
-        .select('*')
-        .eq('id', produto_id)
-        .single()
-
-
-    if (tipo === 'saida' && quantidade > produto.quantidade) {
-        alert(`Estoque insuficiente! Você só tem ${produto.quantidade} unidades.`);
-        return
-    }
-
-    let novaQtd = tipo === 'entrada' ? produto.quantidade + quantidade : produto.quantidade - quantidade
-
-    
-    await supabase.from('produtos').update({ quantidade: novaQtd }).eq('id', produto_id)
-
-    
-    await supabase.from('movimentacoes').insert([
-        { 
-            produto_id, 
-            tipo, 
-            quantidade,
-            data: new Date().toISOString()
-        }
+  await supabase
+    .from('movimentacoes')
+    .insert([
+      {
+        produto_id,
+        tipo,
+        quantidade
+      }
     ])
 
-    
-    if (novaQtd <= produto.quantidade_minima) {
-        alert(`⚠️ Atenção: Estoque baixo para este produto! (Mínimo: ${produto.quantidade_minima})`);
-    }
+  mostrarMensagem(
+    'Movimentação registrada com sucesso!',
+    'sucesso'
+  )
 
-    alert("Movimentação realizada com sucesso!")
-    
-   
-    carregarProdutos();
-    carregarHistorico();
-    e.target.reset(); 
+  form.reset()
+
+  carregarMovimentacoes()
 })
 
+function mostrarMensagem(texto, tipo) {
 
-carregarProdutos();
-carregarHistorico();
+  mensagem.innerHTML = `
+    <div class="alert ${tipo}">
+      ${texto}
+    </div>
+  `
+}
+
+window.logout = () => {
+
+  localStorage.removeItem('usuario')
+
+  window.location.href = 'index.html'
+}
+
+carregarProdutos()
+carregarMovimentacoes()
