@@ -1,34 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produtos</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>InfoEstoque | Produtos</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://kit.fontawesome.com/a2d9d5a64f.js" crossorigin="anonymous"></script>
 </head>
-<header class="topo">
-  <a href="home.html" class="btn-voltar">Voltar</a>
-</header>
+<body>
 
-<h2>Lista de Produtos</h2>
+<div class="layout">
 
-<input type="text" id="busca" placeholder="Buscar produto...">
+  <aside class="sidebar">
 
+    <div>
 
-<table border="1">
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>Categoria</th>
-      <th>Quantidade</th>
-      <th>Mínimo</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
+      <div class="sidebar-logo">
+        <i class="fa-solid fa-boxes-stacked"></i>
+        <span>InfoEstoque</span>
+      </div>
 
-  <tbody id="tabelaProdutos"></tbody>
-</table>
+      <nav>
+
+        <a href="home.html">
+          <i class="fa-solid fa-chart-line"></i>
+          Dashboard
+        </a>
+
+        <a href="produtos.html" class="active">
+          <i class="fa-solid fa-box"></i>
+          Produtos
+        </a>
+
+        <a href="cadastro_produto.html">
+          <i class="fa-solid fa-plus"></i>
+          Cadastro
+        </a>
+
+        <a href="movimentacoes.html">
+          <i class="fa-solid fa-arrow-right-arrow-left"></i>
+          Movimentações
+        </a>
+
+      </nav>
+
+    </div>
+
+    <button class="logout-btn" onclick="logout()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      Sair
+    </button>
+
+  </aside>
+
+  <main class="content">
+
+    <div class="header-dashboard">
+
+      <div>
+        <h1>Produtos</h1>
+        <p>Gerencie os produtos do estoque</p>
+      </div>
+
+    </div>
+
+    <section class="dashboard-cards">
+
+      <div class="dashboard-card">
+        <h3>Total de Produtos</h3>
+        <span id="totalProdutos">0</span>
+      </div>
+
+      <div class="dashboard-card">
+        <h3>Estoque Baixo</h3>
+        <span id="estoqueBaixo">0</span>
+      </div>
+
+    </section>
+
+    <section class="card">
+
+      <div class="table-actions">
+
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+          <input
+            type="text"
+            id="pesquisa"
+            placeholder="Pesquisar produto..."
+          >
+        </div>
+
+        <a href="cadastro_produto.html">
+          <button>
+            <i class="fa-solid fa-plus"></i>
+            Novo Produto
+          </button>
+        </a>
+
+      </div>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Categoria</th>
+            <th>Quantidade</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+
+        <tbody id="tabelaProdutos">
+        </tbody>
+
+      </table>
+
+    </section>
+
+  </main>
+
+</div>
 
 <script type="module" src="js/produtos.js"></script>
 

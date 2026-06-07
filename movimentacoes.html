@@ -1,44 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movimentações</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>InfoEstoque | Movimentações</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://kit.fontawesome.com/a2d9d5a64f.js" crossorigin="anonymous"></script>
 </head>
-<header class="topo">
-  <a href="home.html" class="btn-voltar">Voltar</a>
-</header>
-
 <body>
 
-    <form id="movForm">
-  <select id="produto_id">
-    <option value="">Selecione um produto</option>
-</select>
-  
-  <select id="tipo">
-    <option value="entrada">Entrada</option>
-    <option value="saida">Saída</option>
-  </select>
+<div class="layout">
 
-  <input id="quantidade" type="number">
-  <button>Movimentar</button>
-</form>
+  <aside class="sidebar">
 
-<h3>Histórico de Movimentações</h3>
-<table border="1">
-  <thead>
-    <tr>
-      <th>Produto</th>
-      <th>Tipo</th>
-      <th>Qtd</th>
-      <th>Data</th>
-    </tr>
-  </thead>
-  <tbody id="tabelaHistórico"></tbody>
-</table>
+    <div>
+
+      <div class="sidebar-logo">
+        <i class="fa-solid fa-boxes-stacked"></i>
+        <span>InfoEstoque</span>
+      </div>
+
+      <nav>
+
+        <a href="home.html">
+          <i class="fa-solid fa-chart-line"></i>
+          Dashboard
+        </a>
+
+        <a href="produtos.html">
+          <i class="fa-solid fa-box"></i>
+          Produtos
+        </a>
+
+        <a href="cadastro_produto.html">
+          <i class="fa-solid fa-plus"></i>
+          Cadastro
+        </a>
+
+        <a href="movimentacoes.html" class="active">
+          <i class="fa-solid fa-arrow-right-arrow-left"></i>
+          Movimentações
+        </a>
+
+      </nav>
+
+    </div>
+
+    <button class="logout-btn" onclick="logout()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      Sair
+    </button>
+
+  </aside>
+
+  <main class="content">
+
+    <div class="header-dashboard">
+
+      <div>
+        <h1>Movimentações</h1>
+        <p>Controle entradas e saídas do estoque</p>
+      </div>
+
+    </div>
+
+    <section class="card movimentacao-card">
+
+      <form id="formMovimentacao">
+
+        <div class="form-grid">
+
+          <div class="input-group">
+
+            <i class="fa-solid fa-box"></i>
+
+            <select id="produto" required>
+              <option value="">Selecione o produto</option>
+            </select>
+
+          </div>
+
+          <div class="input-group">
+
+            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+
+            <select id="tipo" required>
+              <option value="">Tipo</option>
+              <option value="entrada">Entrada</option>
+              <option value="saida">Saída</option>
+            </select>
+
+          </div>
+
+          <div class="input-group">
+
+            <i class="fa-solid fa-cubes"></i>
+
+            <input
+              type="number"
+              id="quantidade"
+              placeholder="Quantidade"
+              required
+            >
+
+          </div>
+
+        </div>
+
+        <button type="submit" class="btn-salvar">
+          <i class="fa-solid fa-floppy-disk"></i>
+          Registrar Movimentação
+        </button>
+
+        <div id="mensagem"></div>
+
+      </form>
+
+    </section>
+
+    <section class="card">
+
+      <div class="table-header">
+        <h2>Histórico</h2>
+      </div>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Tipo</th>
+            <th>Quantidade</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+
+        <tbody id="tabelaMovimentacoes">
+        </tbody>
+
+      </table>
+
+    </section>
+
+  </main>
+
+</div>
 
 <script type="module" src="js/movimentacoes.js"></script>
 

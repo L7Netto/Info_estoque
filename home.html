@@ -1,41 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Início</title>
-    <link rel="stylesheet" href="css/style.css">
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>InfoEstoque | Dashboard</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://kit.fontawesome.com/a2d9d5a64f.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-    <h2 id="user"></h2>
+  <div class="layout">
 
-<header class="header">
-  <h1>Início</h1>
-<button onclick="logout()">Sair</button>
-</header>
+  <aside class="sidebar">
 
-<div class="menu-topo">
-    <a href="produtos.html" class="btn-caixa">📦 Produtos</a>
-    <a href="cadastro_produto.html" class="btn-caixa">➕ Cadastrar Produto</a>
-    <a href="movimentacoes.html" class="btn-caixa">🔃 Movimentações</a>
-</div>
+    <div>
 
-<script>
-const user = JSON.parse(localStorage.getItem('usuario'))
+      <div class="sidebar-logo">
+        <i class="fa-solid fa-boxes-stacked"></i>
+        <span>InfoEstoque</span>
+      </div>
 
-if (!user) {
-  window.location.href = 'index.html'
-}
+      <nav>
 
-document.getElementById('user').innerText = "Bem-vindo, " + user.usuario
+        <a href="home.html" class="active">
+          <i class="fa-solid fa-chart-line"></i>
+          Dashboard
+        </a>
 
-function logout(){
-  localStorage.removeItem('usuario')
-  window.location.href = 'index.html'
-}
-</script>
+        <a href="produtos.html">
+          <i class="fa-solid fa-box"></i>
+          Produtos
+        </a>
+
+        <a href="cadastro_produto.html">
+          <i class="fa-solid fa-plus"></i>
+          Cadastro
+        </a>
+
+        <a href="movimentacoes.html">
+          <i class="fa-solid fa-arrow-right-arrow-left"></i>
+          Movimentações
+        </a>
+
+        </nav>
+
+    </div>
+
+    <button class="logout-btn" onclick="logout()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      Sair
+    </button>
+
+  </aside>
+
+  <main class="content">
+
+    <div class="header-dashboard">
+
+      <div>
+        <h1>Dashboard</h1>
+        <p>Visão geral do estoque</p>
+      </div>
+
+    </div>
+
+    <section class="dashboard-cards">
+
+      <div class="dashboard-card">
+        <h3>Total de Produtos</h3>
+        <span id="totalProdutos">0</span>
+      </div>
+
+      <div class="dashboard-card">
+        <h3>Entradas</h3>
+        <span id="totalEntradas">0</span>
+      </div>
+
+      <div class="dashboard-card">
+        <h3>Saídas</h3>
+        <span id="totalSaidas">0</span>
+      </div>
+
+      <div class="dashboard-card">
+        <h3>Estoque Baixo</h3>
+        <span id="estoqueBaixo">0</span>
+      </div>
+
+    </section>
+
+    <section class="card tabela-card">
+
+      <div class="table-header">
+        <h2>Produtos Recentes</h2>
+      </div>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody id="tabelaProdutos">
+        </tbody>
+        
+      </table>
+    </section>
+  </main>
+
+  </div>
+
+<script type="module" src="js/home.js"></script>
 
 </body>
 </html>

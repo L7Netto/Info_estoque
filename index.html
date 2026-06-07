@@ -2,29 +2,71 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>InfoEstoque | Login</title>
+
   <link rel="stylesheet" href="css/style.css">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://kit.fontawesome.com/a2d9d5a64f.js" crossorigin="anonymous"></script>
 </head>
-<body class="auth-page old-bg">
+<body>
 
 <div class="login-container">
 
-  
   <div class="login-box">
-    <h2>Bem-vindo</h2>
+
+    <div class="logo-area">
+      <div class="logo-icon">
+        <i class="fa-solid fa-boxes-stacked"></i>
+      </div>
+
+      <h1>InfoEstoque</h1>
+      <p>Controle de estoque inteligente</p>
+    </div>
 
     <form id="loginForm">
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="senha" placeholder="Senha" required>
 
-      <button type="submit">Entrar</button>
+      <div class="input-group">
+        <i class="fa-solid fa-envelope"></i>
+        <input type="email" id="email" placeholder="Seu email" required>
+      </div>
+
+      <div class="input-group">
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" id="senha" placeholder="Sua senha" required>
+      </div>
+
+      <button type="submit">
+        Entrar no sistema
+      </button>
+
+      <div id="mensagem"></div>
+
     </form>
 
-    <a href="cadastro.html" class="btn-secundario">Cadastrar usuário</a>
+    <a href="cadastro.html" class="btn-secundario">
+      Criar conta
+    </a>
+
   </div>
 
-  <div class="login-image"></div>
+  <div class="login-image">
+
+    <div class="overlay">
+      <h2>Gestão moderna de estoque</h2>
+
+      <p>
+        Controle entradas, saídas e produtos em uma interface moderna e profissional.
+      </p>
+    </div>
+
+  </div>
 
 </div>
 
